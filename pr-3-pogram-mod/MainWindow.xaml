@@ -14,7 +14,7 @@
 
         <Grid Grid.Row="0" Background="#90EE90">
             <Image Source="/Resources/logo1_iz.jpg" HorizontalAlignment="Left" Margin="5"/>
-            <Button x:Name="BACK" Content="Назад" HorizontalAlignment="Right" Click="BACK_Click"/>
+            <Button x:Name="BACK" Content="Назад" HorizontalAlignment="Right" Cursor="Hand" Click="BACK_Click"/>
         </Grid>
 
         <Frame x:Name="FrMain" Grid.Row="1" NavigationUIVisibility="Hidden" ContentRendered="FrMain_ContentRendered"/>

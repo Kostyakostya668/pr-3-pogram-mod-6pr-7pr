@@ -17,14 +17,13 @@ using System.Windows.Shapes;
 namespace pr_3_pogram_mod.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Client.xaml
+    /// Логика взаимодействия для Admin.xaml
     /// </summary>
-    public partial class Client : Page
+    public partial class Admin : Page
     {
-        public Client(users user, string role)
+        public Admin(users user, string role)
         {
             InitializeComponent();
         }
     }
-
 }

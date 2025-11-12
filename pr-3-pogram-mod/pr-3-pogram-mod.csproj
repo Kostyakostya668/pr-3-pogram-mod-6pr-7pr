@@ -35,9 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +65,86 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="bd\apartments.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\bdModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bdModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\bdModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\bdModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bdModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="bd\calculation_bases.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\calculation_types.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\charges.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\employees.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\houses.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\meters.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\meter_types.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\ownership_types.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\payments.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\payment_methods.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\request_statuses.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\residents.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\services.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\service_requests.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\service_types.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\sysdiagrams.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\users.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\user_roles.cs">
+      <DependentUpon>bdModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Admin.xaml.cs">
+      <DependentUpon>Admin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Employee.xaml.cs">
+      <DependentUpon>Employee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CaptchaGenerator.cs" />
+    <Compile Include="Services\Hash.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,11 +157,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Admin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Autho1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Client.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Employee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,6 +198,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="bd\bdModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>bdModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="bd\bdModel.edmx.diagram">
+      <DependentUpon>bdModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -114,6 +219,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\logo1_iz.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bd\bdModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>bdModel.edmx</DependentUpon>
+      <LastGenOutput>bdModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="bd\bdModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>bdModel.edmx</DependentUpon>
+      <LastGenOutput>bdModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
