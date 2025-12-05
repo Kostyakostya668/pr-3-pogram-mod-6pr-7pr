@@ -15,6 +15,6 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="2" Margin="300, 10" Text="Вы вошли как админ" TextAlignment="Center"/>
+        <TextBlock x:Name="textName" Grid.Row="2" Margin="300, 10" TextAlignment="Center"/>
     </Grid>
 </Page>

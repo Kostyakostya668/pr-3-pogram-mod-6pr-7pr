@@ -21,9 +21,10 @@ namespace pr_3_pogram_mod.Pages
     /// </summary>
     public partial class Employee : Page
     {
-        public Employee(users users, string role)
+        public Employee(users users, string role, employees employee)
         {
             InitializeComponent();
+            textName.Text = $"Пользователь: {role}\n{employee.surname} {employee.name}";
         }
     }
 }

@@ -21,9 +21,12 @@ namespace pr_3_pogram_mod.Pages
     /// </summary>
     public partial class Admin : Page
     {
-        public Admin(users user, string role)
+        public Admin(users user, string role, employees employee)
         {
             InitializeComponent();
+            textName.Text = $"Пользователь: {role}\n{employee.surname} {employee.name}";
         }
+
+
     }
 }

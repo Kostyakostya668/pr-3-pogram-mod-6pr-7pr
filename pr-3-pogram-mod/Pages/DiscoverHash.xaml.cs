@@ -1,7 +1,8 @@
-﻿using pr_3_pogram_mod.bd;
+﻿using pr_3_pogram_mod.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,19 +18,20 @@ using System.Windows.Shapes;
 namespace pr_3_pogram_mod.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Client.xaml
+    /// Логика взаимодействия для DiscoverHash.xaml
     /// </summary>
-    public partial class Client : Page
+    public partial class DiscoverHash : Page
     {
-        public Client(users user, string role, residents resident)
+        public DiscoverHash()
         {
             InitializeComponent();
-            if (user == null || role == null || resident == null)
-                textName.Text = "Вы вошли как гость";
-            
-            else 
-                textName.Text = $"Пользователь: {role}\n{resident.surname} {resident.name}";
+        }
+
+        private void btndiscover_Click(object sender, RoutedEventArgs e)
+        {
+            string password = hashText.Text;
+            string passwordH = Services.Hash.HashPassword(password);
+            tbPrint.Text = passwordH;
         }
     }
-
 }
