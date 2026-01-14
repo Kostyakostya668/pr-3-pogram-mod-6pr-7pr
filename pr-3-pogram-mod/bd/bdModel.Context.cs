@@ -15,6 +15,8 @@ namespace pr_3_pogram_mod.bd
     
     public partial class bdMod : DbContext
     {
+        private static bdMod context;
+
         public bdMod()
             : base("name=bdMod")
         {
@@ -44,5 +46,12 @@ namespace pr_3_pogram_mod.bd
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<user_roles> user_roles { get; set; }
         public virtual DbSet<users> users { get; set; }
+
+        public static bdMod GetContext(bool check)
+        {
+            if (context == null || check)
+                context = new bdMod();
+            return context;
+        }
     }
 }

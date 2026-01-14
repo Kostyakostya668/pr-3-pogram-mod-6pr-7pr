@@ -140,6 +140,9 @@
     <Compile Include="Pages\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\customeRes.xaml.cs">
+      <DependentUpon>customeRes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DiscoverHash.xaml.cs">
       <DependentUpon>DiscoverHash.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Client.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\customeRes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,6 +248,7 @@
       <DependentUpon>bdModel.edmx</DependentUpon>
       <LastGenOutput>bdModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\iconUser.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,17 +11,14 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="260"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="800"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Введите пароль и узнайте хэш"/>
             <TextBox x:Name="hashText" Margin="5"/>
             <Button x:Name="btndiscover" Content="Узнать" Click="btndiscover_Click"/>
             <TextBox x:Name="tbPrint"/>
         </StackPanel>
-        
     </Grid>
 </Page>
