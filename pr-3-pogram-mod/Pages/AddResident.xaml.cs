@@ -58,12 +58,13 @@ namespace pr_3_pogram_mod.Pages
             {
                 residents newRes = new residents();
 
+                newRes.user_id = oldId;
                 newRes.name = name.Text;
                 newRes.surname = surname.Text;
                 newRes.phone = phone.Text;
                 newRes.residents_count = Convert.ToInt32(res_count.Text);
                 newRes.account_balance = Convert.ToDecimal(account_bal.Text);
-                newRes.apartment_id = 4;
+                newRes.apartment_id = comboBoxNumberApart.SelectedIndex;
 
                 context.residents.Add(newRes);
 
@@ -72,13 +73,13 @@ namespace pr_3_pogram_mod.Pages
                 MessageBox.Show("Резидент добавлен", "Инфо", MessageBoxButton.OK);
             }
 
-            //Console.WriteLine(oldId);   
+            Console.WriteLine(oldId);
 
-            //foreach (var item in userList)
-            //{
-            //    idPols.Add(item.id);
-            //    Console.WriteLine(idPols);
-            //}
+            foreach (var item in userList)
+            {
+                idPols.Add(item.id);
+                Console.WriteLine(idPols);
+            }
 
         }
 
@@ -86,6 +87,39 @@ namespace pr_3_pogram_mod.Pages
 
         private void btAddPol_Click_1(object sender, RoutedEventArgs e)
         {
+            var allApartments = bdMod.GetContext(true).apartments.ToList();
+            var allResidents = bdMod.GetContext(true).residents.ToList();
+            List<int> freeApartment = new List<int>();
+            List<int> freeApartmentNumber = new List<int>();
+
+            foreach (var apartment in allApartments)
+            {
+                freeApartment.Add(apartment.id);
+            }
+
+            for (int i = 0; i < allResidents.Count; i++)
+            {
+                if (allResidents[i].apartment_id.HasValue)
+                {
+                    freeApartment.Remove(allResidents[i].apartment_id.Value);
+                }
+            }
+
+            //Console.WriteLine(freeApartment.Count);
+
+            for (int i = 0; i < freeApartment.Count; i++)
+            {
+                var apartment = allApartments.FirstOrDefault(a => a.id == freeApartment[i]);
+
+                if (apartment != null && apartment.number != null)
+                {
+                    freeApartmentNumber.Add(Convert.ToInt32(apartment.number));
+                }
+            }
+
+            comboBoxNumberApart.ItemsSource = freeApartmentNumber;
+
+
             if (usernameBox.Text == "" || emailBox.Text == "" || passwordBox.Text == "" || comboBoxRole.SelectedIndex == -1)
             {
                 MessageBox.Show("Вы не ввели полную информацию", "Ошибка", MessageBoxButton.OK);
@@ -111,6 +145,10 @@ namespace pr_3_pogram_mod.Pages
             }
 
             StAddResident.IsEnabled = true;
+
+            //Определенеи свободных комнат
+
+
         }
     }
 }

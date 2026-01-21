@@ -70,11 +70,7 @@
                     <TextBox x:Name="account_bal"/>
                     <TextBlock Text="Номер апартаментов:"/>
                     <ComboBox x:Name="comboBoxNumberApart">
-                        <ComboBoxItem>
-                            <StackPanel>
-                                <TextBlock FontSize="28">Админ</TextBlock>
-                            </StackPanel>
-                        </ComboBoxItem>
+    
                     </ComboBox>
                 </StackPanel>
 
