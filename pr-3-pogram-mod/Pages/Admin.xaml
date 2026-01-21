@@ -16,55 +16,37 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>-->
-
         <TextBlock x:Name="textName" Grid.Row="0" Margin="10" HorizontalAlignment="Left"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="Резиденты" />
-            <TextBlock Text="Поиск по имени:"/>
-            <TextBox x:Name="tbNameFind" Width="150" Margin="0,5,10,20" TextChanged="tbNameFind_TextChanged"/>
-            <Button x:Name="brRes" Content="Обновить" Click="brRes_Click"/>
+            <TextBlock Text="Резиденты" Margin="5,0"/>
+            <TextBlock Text="Поиск:" Margin="5,0"/>
+            <TextBox x:Name="tbNameFind" Width="150" Margin="0,5,10,5" TextChanged="tbNameFind_TextChanged"/>
+            <ComboBox Name="chosenSort" SelectionChanged="chosenSort_SelectionChanged" Margin="5,0">
+                <ComboBoxItem>Просто</ComboBoxItem>
+                <ComboBoxItem>Только имя</ComboBoxItem>
+                <ComboBoxItem>Только фамилия</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="brRes" Content="Обновить" Click="brRes_Click" Margin="5,0"/>
+            <Button x:Name="btAddRes" Content="Добавить" Click="btAddRes_Click" Margin="5,0"/>
         </StackPanel>
 
-        <ListView Name="lvRes" Grid.Row="2" Margin="0,0,0,0" MouseDoubleClick="lvRes_MouseDoubleClick" 
-                  d:ItemsSource="{d:SampleData ItemCount = 1 }" HorizontalAlignment="Stretch">
+        <ListView Name="lvRes" Grid.Row="2" Margin="10" MouseDoubleClick="lvRes_MouseDoubleClick" 
+                  HorizontalAlignment="Stretch">
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            
+
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Margin" Value="5"/>
                 </Style>
             </ListView.ItemContainerStyle>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="60"/>
-                            </Grid.RowDefinitions>
-
-                            <Image Grid.Row="0" Margin="5" Source="/Resources/iconUser.png"/>
-
-                            <StackPanel Grid.Row="1">
-                                <TextBlock Text="{Binding name}"/>
-                                <TextBlock Text="{Binding surname}"/>
-                            </StackPanel>
-                            
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </Page>

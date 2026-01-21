@@ -1,0 +1,86 @@
+﻿<Page x:Class="pr_3_pogram_mod.Pages.AddResident"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:pr_3_pogram_mod.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="AddResident"
+      Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
+        
+        <TextBlock Text="Добавление резидента (Сначала добавьте пользователя)"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Имя пользователя"/>
+                    <TextBox x:Name="usernameBox" />
+                    <TextBlock Text="Email"/>
+                    <TextBox x:Name="emailBox"/>
+                    <TextBlock Text="Пароль"/>
+                    <TextBox x:Name="passwordBox"/>
+                    <ComboBox x:Name="comboBoxRole">
+                        <ComboBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="16">Админ</TextBlock>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="16">Работник</TextBlock>
+                            </StackPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="16">Резидент</TextBlock>
+                            </StackPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+            </StackPanel>
+            <Button x:Name="btAddPol" Content="Добавить" Click="btAddPol_Click_1"/>
+        </StackPanel>
+
+        <StackPanel x:Name="StAddResident" Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Имя"/>
+                    <TextBox x:Name="name" />
+                    <TextBlock Text="Фамилия"/>
+                    <TextBox x:Name="surname"/>
+                    <TextBlock Text="Телефон:"/>
+                    <TextBox x:Name="phone" />
+                    <TextBlock Text="Количество жильцов:"/>
+                    <TextBox x:Name="res_count" />
+                    <TextBlock Text="Баланс:"/>
+                    <TextBox x:Name="account_bal"/>
+                    <TextBlock Text="Номер апартаментов:"/>
+                    <ComboBox x:Name="comboBoxNumberApart">
+                        <ComboBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="28">Админ</TextBlock>
+                            </StackPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <Image Source="/Resources/iconUser.png" VerticalAlignment="Top" Width="110" Height="110"/>
+            </StackPanel>
+            <Button x:Name="btAddRes" Content="Добавить" Click="btAddRes_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

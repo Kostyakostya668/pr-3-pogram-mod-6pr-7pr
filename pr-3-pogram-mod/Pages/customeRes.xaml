@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:pr_3_pogram_mod.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800"
+      Height="700"
       Title="customeRes"
       Background="White">
 
