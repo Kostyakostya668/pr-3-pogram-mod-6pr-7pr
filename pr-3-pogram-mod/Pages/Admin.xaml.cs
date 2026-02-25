@@ -10,6 +10,12 @@ namespace pr_3_pogram_mod.Pages
 {
     public partial class Admin : Page
     {
+
+        class Employee
+        {
+
+        }
+
         private ObservableCollection<residents> _residents;
 
         public Admin(users user, string role, employees employee)

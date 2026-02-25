@@ -11,7 +11,8 @@ namespace pr_3_pogram_mod.bd
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class employees
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,9 @@ namespace pr_3_pogram_mod.bd
     
         public int id { get; set; }
         public int user_id { get; set; }
+
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
         public string name { get; set; }
         public string surname { get; set; }
         public string position { get; set; }
