@@ -36,20 +36,20 @@ namespace pr_3_pogram_mod.bd
 
         public int id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите имя пользователя")]
         [StringLength(20, MinimumLength = 5, ErrorMessage ="Имя должно быть мимнимум 5 и макс 20")]
         public string username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите пароль")]
         [MinLength(5, ErrorMessage = "Пароль должнен содержать минимум 5 символов")]
         public string password { get; set; }
 
-        [Required]
-        [StringLength(20, MinimumLength = 5)]
+        [Required(ErrorMessage = "Введите почту")]
+        [StringLength(40, MinimumLength = 5)]
         [EmailAddress(ErrorMessage = "Некорректный адрес электронной почты")]
         public string email { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "ID роли должен быть больше 0")]
+        [Range(1, int.MaxValue, ErrorMessage = "Выберите роль")]
         public int role_id { get; set; }
         public Nullable<bool> is_active { get; set; }
     

@@ -21,9 +21,10 @@
         </Grid.ColumnDefinitions>
 
         
-        <TextBlock Text="Добавление резидента (Сначала добавьте пользователя)"/>
 
-        <StackPanel Grid.Row="1" Grid.Column="0">
+
+        <StackPanel x:Name="spAddPol" Grid.Row="1" Grid.Column="0">
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="Создайте учетную запись"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel>
                     <TextBlock Text="Имя пользователя"/>
@@ -56,6 +57,7 @@
         </StackPanel>
 
         <StackPanel x:Name="StAddResident" Grid.Row="1" Grid.Column="1">
+            <TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" Text="Заполните данные резидента"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel>
                     <TextBlock Text="Имя"/>
@@ -65,9 +67,9 @@
                     <TextBlock Text="Телефон:"/>
                     <TextBox x:Name="phone" />
                     <TextBlock Text="Количество жильцов:"/>
-                    <TextBox x:Name="res_count" />
+                    <TextBox x:Name="res_count" Text="0" LostFocus="res_count_LostFocus"/>
                     <TextBlock Text="Баланс:"/>
-                    <TextBox x:Name="account_bal"/>
+                    <TextBox x:Name="account_bal" Text="0" LostFocus="res_count_LostFocus"/>
                     <TextBlock Text="Номер апартаментов:"/>
                     <ComboBox x:Name="comboBoxNumberApart">
     

@@ -11,7 +11,8 @@ namespace pr_3_pogram_mod.bd
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class residents
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,14 +22,48 @@ namespace pr_3_pogram_mod.bd
             this.payments = new HashSet<payments>();
             this.service_requests = new HashSet<service_requests>();
         }
+
+        public residents(int user_id, int apartment_id, string name, string surname, string phone, int residents_count, decimal account_balance)
+        {
+            this.user_id = user_id;
+            this.apartment_id = apartment_id;
+            this.name = name;
+            this.surname = surname;
+            this.phone = phone;
+            this.residents_count = residents_count;
+            this.account_balance = account_balance;
+
+            this.charges = new HashSet<charges>();
+            this.payments = new HashSet<payments>();
+            this.service_requests = new HashSet<service_requests>();
+        }
     
         public int id { get; set; }
         public Nullable<int> user_id { get; set; }
+
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Не выбран номер аппартаментов")]
         public Nullable<int> apartment_id { get; set; }
+
+        [Required(ErrorMessage = "Введите имя")]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "Имя должно быть мимнимум 2 и макс 30")]
         public string name { get; set; }
+
+        [Required(ErrorMessage = "Введите фамилию")]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "Имя должно быть мимнимум 2 и макс 40")]
         public string surname { get; set; }
+
+        [Required(ErrorMessage ="Введите номер телефона")]
+        [Phone(ErrorMessage ="Неккоректнй номер телефона")]
         public string phone { get; set; }
+
+        //private int _residents_count = 0;
+        [Required(ErrorMessage = "Количксто жильцов должно быть заполнено")]
+        [Range(1, int.MaxValue, ErrorMessage = "Количество жильцов > 0")]
         public Nullable<int> residents_count { get; set; }
+
+        [Required(ErrorMessage = "Баланс должен быть заполнен")]
+        [Range(1, 25000, ErrorMessage = "Баланс должнен быть > 0")]
         public Nullable<decimal> account_balance { get; set; }
     
         public virtual apartments apartments { get; set; }

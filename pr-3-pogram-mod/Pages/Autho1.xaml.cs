@@ -237,10 +237,6 @@ namespace pr_3_pogram_mod.Pages
                 block(true);
             }
         }
-
-        
-
-
         private void block(bool blockB)
         {
             timeBlock.Content = "";
@@ -280,6 +276,12 @@ namespace pr_3_pogram_mod.Pages
         {
             NavigationService.Navigate(new DiscoverHash());
             hide_ui_captha();
+        }
+
+        private void btnMail_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new SendPassMess());
+
         }
     }
 }
