@@ -16,7 +16,7 @@
             <ColumnDefinition Width="240"/>
         </Grid.ColumnDefinitions>
         
-        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel x:Name="spMainLogIn" Visibility="Visible" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label x:Name="timeBlock" Foreground="Red" HorizontalAlignment="Center"/>
             <TextBlock Text="Логин"/>
             <TextBox x:Name="txtLogin" IsReadOnlyCaretVisible="True"/>
@@ -39,5 +39,8 @@
                 <Button x:Name="btnMail" Margin="5,0,5,5" Width="150" Content="Забыл пароль" Click="btnMail_Click"/>
             </StackPanel>
         </StackPanel>
+
+        
+        
     </Grid>
 </Page>

@@ -315,6 +315,9 @@
     <Compile Include="Pages\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CheckTwoAuth.xaml.cs">
+      <DependentUpon>CheckTwoAuth.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\customeRes.xaml.cs">
       <DependentUpon>customeRes.xaml</DependentUpon>
     </Compile>
@@ -351,6 +354,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Autho1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CheckTwoAuth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

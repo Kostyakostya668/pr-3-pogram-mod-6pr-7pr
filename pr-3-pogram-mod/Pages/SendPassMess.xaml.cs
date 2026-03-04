@@ -120,6 +120,11 @@ namespace pr_3_pogram_mod.Pages
 
         private void tbCode_TextChanged(object sender, TextChangedEventArgs e)
         {
+            OnlyCode(tbCode);   
+        }
+
+        public static void OnlyCode(TextBox tbCode)
+        {
             string text = new string(tbCode.Text.Where(char.IsDigit).ToArray());
 
             if (tbCode.Text != text)

@@ -3,6 +3,7 @@ using pr_3_pogram_mod.Services;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,25 +13,16 @@ using System.Xml.Linq;
 
 namespace pr_3_pogram_mod.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для Autho1.xaml
-    /// </summary>
     public partial class Autho1 : Page
     {
+        private users checkUser;
+
+        private bool isTwoAuthorization = true;
+        
         int click;
+
         DispatcherTimer timer = new DispatcherTimer();
         private int seconds = 11;
-
-        //private static bdMod _context;
-
-        //public static bdMod GetContext()
-        //{
-        //    if (_context == null)
-        //    {
-        //        _context = new bdMod();
-        //    }
-        //    return _context;
-        //}
 
         public Autho1()
         {
@@ -70,14 +62,13 @@ namespace pr_3_pogram_mod.Pages
             string login = txtLogin.Text.Trim();
             string password = passwordBox.Password.Trim();
             string passwordH = Hash.HashPassword(password);
-            //Debug.Print(passwordH);
             bdMod bd = new bdMod();
             
-            var user = bd.users.Where(x => x.username == login && x.password == passwordH).FirstOrDefault();
+            checkUser = bd.users.Where(x => x.username == login && x.password == passwordH).FirstOrDefault();
             
             if (click == 1)
             {
-                if (user != null)
+                if (checkUser != null)
                 {
                     check_user();
                     click = 0;
@@ -85,7 +76,7 @@ namespace pr_3_pogram_mod.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Вы ввели логин или пароль неверно!");
+                    MessageBox.Show("Вы ввели логин или пароль неверно");
                     GenerateCapctcha();
                     passwordBox.Clear();
                 }
@@ -93,7 +84,7 @@ namespace pr_3_pogram_mod.Pages
             }
             else if (click > 1)
             {
-                if (user != null && txtBoxCaptha.Text == txtBlockCaptha.Text)
+                if (checkUser != null && txtBoxCaptha.Text == txtBlockCaptha.Text)
                 {
                     check_user();
                     capthaPanel.Visibility = Visibility.Hidden;
@@ -102,7 +93,7 @@ namespace pr_3_pogram_mod.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Введите данные заново!");
+                    MessageBox.Show("Введите данные заново");
                     GenerateCapctcha();
                     passwordBox.Clear();
                     txtBoxCaptha.Clear();
@@ -119,39 +110,42 @@ namespace pr_3_pogram_mod.Pages
 
             void check_user()
             {
-                var user_role = bd.user_roles.Where(x => user.role_id == x.id).FirstOrDefault();
-
-                //Если бы былм в разных таблицах:
-                //switch (user_role.role)
-                //{
-                //    case "resident":
-                //        var user_name = bd.residents.Where(x => user.id == x.user_id).FirstOrDefault();
-                //        MessageBox.Show($"Привет {user_name.surname} {user_name.name}"); break;
-                //    default:
-                //        break;
-                //}
+                var user_role = bd.user_roles.Where(x => checkUser.role_id == x.id).FirstOrDefault();
 
                 if (user_role.role == "admin" || user_role.role == "employee")
                 {
-                    var user_name = bd.employees.Where(x => user.id == x.user_id).FirstOrDefault();
+                    var user_name = bd.employees.Where(x => checkUser.id == x.user_id).FirstOrDefault();
                     bool isTime = hello_msg(user_name, user_role.role);
                     if (isTime)
-                        LoadPage(user_role.role, user, user_name);
+                    {
+                        if (isTwoAuthorization)
+                        {
+                            NavigationService.Navigate(new Pages.CheckTwoAuth(checkUser, user_role, user_name, null));   
+                        }
+                        else
+                        {
+                            LoadPage(user_role.role, checkUser, user_name);
+                        }
+                    }
                     else
                         MessageBox.Show("Вы не можете войти, так как рабочий день не наступил");
                     
                 }
                 if (user_role.role == "resident")
                 {
-                    var user_name = bd.residents.Where(x => user.id == x.user_id).FirstOrDefault();
-                    hello_msg(user_name, user_role.role);
-                    LoadPage(user_role.role, user, user_name);
+                    var user_name = bd.residents.Where(x => checkUser.id == x.user_id).FirstOrDefault();
+
+                    if (isTwoAuthorization)
+                    {
+
+                    }
+                    else
+                    {
+                        hello_msg(user_name, user_role.role);
+                        LoadPage(user_role.role, checkUser, user_name);
+                    }
                 }
-
-                //MessageBox.Show("Вы вошли под: " + user_role.role).ToString();
-
             }
-
         }
 
         private bool hello_msg(employees employee_user, string role)
@@ -199,30 +193,6 @@ namespace pr_3_pogram_mod.Pages
 
         }
 
-        //public static string GetCurrentPeriod(DateTime date)
-        //{
-        //    var now = date;
-        //    int hour = now.Hour;
-        //    int minute = now.Minute;
-        //    int totalMinutes = hour * 60 + minute;
-
-        //    if (totalMinutes >= 10 * 60 && totalMinutes <= 19 * 60)
-        //    {
-        //        if (totalMinutes >= 10 * 60 && totalMinutes <= 12 * 60)
-        //            return "Утро (10:00-12:00)";
-        //        else if (totalMinutes >= 12 * 60 + 1 && totalMinutes <= 17 * 60)
-        //            return "День (12:01-17:00)";
-        //        else if (totalMinutes >= 17 * 60 + 1 && totalMinutes <= 19 * 60)
-        //            return "Вечер (17:01-19:00)";
-        //        else
-        //            return "Рабочее время";
-        //    }
-        //    else
-        //    {
-        //        return "Вне рабочего времени (10:00-19:00)";
-        //    }
-        //}
-
         private void timer_Tick(object sender, EventArgs e)
         {
            seconds--;
@@ -245,6 +215,7 @@ namespace pr_3_pogram_mod.Pages
             capthaPanel.Visibility = Visibility.Hidden;
             ButtonPanel.IsEnabled = blockB;
             btnHash.IsEnabled = blockB;
+            btnMail.IsEnabled = blockB;
         }
 
         private void LoadPage(string _role, users user, employees employee)
@@ -281,7 +252,8 @@ namespace pr_3_pogram_mod.Pages
         private void btnMail_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new SendPassMess());
-
+            hide_ui_captha();
         }
+
     }
 }
