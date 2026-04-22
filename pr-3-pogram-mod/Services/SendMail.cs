@@ -9,18 +9,37 @@ namespace pr_3_pogram_mod.Services
 {
     public class SendMail
     {
+        //
         public string Password { get; set; }
 
-        public static void CreateMail(string email ,int code)
+        /// <summary>
+        /// Создает и отправляет сообщение с кодом для проверки пользователя
+        /// </summary>
+        /// <param name="email">Email на который будет отправляться сообщение</param>
+        /// <param name="code">Код, который используется для проверки пользователя</param>
+        /// <param name="mailGoal">Цель сообщения, указыватся для темы письма</param>
+
+        public static void CreateMail(string email, int code, string mailGoal)
         {
             var config = JsonSerializer.Deserialize<SendMail>(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "config.json")));
 
-            MailAddress from = new MailAddress("kostyhomyakov0807@gmail.com", "Смена пароля");
-            MailAddress to = new MailAddress($"{email}");
-            MailMessage mail = new MailMessage(from,to);
+            string nameMail = "";
+            string mainSubject = "";
 
-            mail.Subject = "Код проверки для смены пароля";
-            mail.Body = $"Код подтверждения:{code}";
+            switch (mailGoal)
+            {
+                case "forPass": nameMail = "Смена пароля"; mainSubject = "Код проверки для смены пароля";  break;
+                case "forAny": nameMail = "Вход"; mainSubject = "Код проверки"; break;
+                default: 
+                    break;
+            }
+
+            MailAddress from = new MailAddress("kostyhomyakov0807@gmail.com", $"{nameMail}");
+            MailAddress to = new MailAddress($"{email}");
+            MailMessage mail = new MailMessage(from, to);
+
+            mail.Subject = $"{mainSubject}";
+            mail.Body = $"Код подтверждения: {code}";
             mail.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);

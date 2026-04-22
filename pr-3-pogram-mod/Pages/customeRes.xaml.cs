@@ -23,36 +23,12 @@ namespace pr_3_pogram_mod.Pages
     /// </summary>
     public partial class customeRes : Page
     {
-
-        //private class res
-        //{
-        //    public string name { get; set; }
-        //    public string surname { get; set; }
-        //    public string phone { get; set; }
-        //    public int idPol { get; set; }
-
-        //    public void showInfo()
-        //    {
-        //        Debug.WriteLine(idPol);
-        //    }
-        //}
-
-        //private res currentRes;
-
         private int idPol;
 
         public customeRes(residents resident)
         {
             InitializeComponent();
 
-            //currentRes = new res
-            //{
-            //    name = resident.name,
-            //    surname = resident.surname,
-            //    phone = resident.phone,
-            //    idPol = resident.id
-            //};
-            
             idPol = resident.id;
             name.Text = resident.name;
             surname.Text = resident.surname;
@@ -63,9 +39,6 @@ namespace pr_3_pogram_mod.Pages
 
         private void btSaveChan_Click(object sender, RoutedEventArgs e)
         {
-            //currentRes.name = name.Text;
-            //currentRes.surname = surname.Text;
-            //currentRes.phone = phone.Text;
 
             using (var context = new bdMod())
             {

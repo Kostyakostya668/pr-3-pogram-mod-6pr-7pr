@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -25,6 +26,7 @@ namespace pr_3_pogram_mod.Pages
 
     public partial class SendPassMess : Page
     {
+        
         private int code;
         private users changeUser;
         private int? changeUserId = null;
@@ -33,6 +35,11 @@ namespace pr_3_pogram_mod.Pages
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Проверят валдиность Email, чтобы потом использовать для отправки сообщения
+        /// </summary>
+        /// <param name="email">Email, который будет проверяться</param>
+        /// <returns>Возвращает true или false, исходся их возвраат будет понятно корректен ли Email</returns>
         public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -43,6 +50,11 @@ namespace pr_3_pogram_mod.Pages
             return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
         }
 
+        /// <summary>
+        /// Проверяет валидность имени пользователя, чтобя по этому имени найти почту пользователя
+        /// </summary>
+        /// <param name="username">Имя пользователя, которое будет проверяться</param>
+        /// <returns>Возвращает true или false, исходся их возвраат будет понятно корректно ли имя пользователя</returns>
         public static bool IsValidUserName(string username)
         {
             var pattern = @"^[a-zA-Z0-9_]{5,}$";
@@ -61,6 +73,11 @@ namespace pr_3_pogram_mod.Pages
 
         }
 
+        /// <summary>
+        /// Обращется к БД и ищет данные пользователя по имени пользоваетля или почте, если успешно вызывает метод создания сообщения
+        /// </summary>
+        /// <param name="checkData">Даннве по которым происходит поиск пользователя в БД (имя пользователя или почта)</param>
+        /// <param name="isMail">Флаг для того чтобы понять по каким данным ползьзователя искать его в БД</param>
         private void CheckDB(string checkData, bool isMail)
         {
             using (var context = new bdMod())
@@ -94,11 +111,14 @@ namespace pr_3_pogram_mod.Pages
             }
         }
 
+        /// <summary>
+        /// Создает 4-значный код и вызывает метод отправки сообщения передавая код и юзера которому нужно отправить сообщение
+        /// </summary>
         private void CreatemMail()
         {
             Random randomCode = new Random();
             code = randomCode.Next(1000, 10000);
-            SendMail.CreateMail(changeUser.email, code);
+            SendMail.CreateMail(changeUser.email, code, "forPas");
             changeUserId = changeUser.id;
 
             spCheckCode.Visibility = Visibility.Visible;
@@ -123,9 +143,16 @@ namespace pr_3_pogram_mod.Pages
             OnlyCode(tbCode);   
         }
 
+        /// <summary>
+        /// Нужен для того чтобы пользователь мог вводить только числа
+        /// Вызывается при событии изменения текста в TextBox`е
+        /// </summary>
+        /// <param name="tbCode">Переменная для доступа к TextBox из кода </param>
         public static void OnlyCode(TextBox tbCode)
         {
             string text = new string(tbCode.Text.Where(char.IsDigit).ToArray());
+
+            //Console.WriteLine(text);
 
             if (tbCode.Text != text)
             {

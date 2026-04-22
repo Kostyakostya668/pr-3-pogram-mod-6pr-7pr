@@ -1,23 +1,10 @@
 ﻿using pr_3_pogram_mod.bd;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
 
 namespace pr_3_pogram_mod.Pages
 {
@@ -40,18 +27,20 @@ namespace pr_3_pogram_mod.Pages
             //var residents = bdMod.GetContext(true).residents.ToList();
             //_residents = new ObservableCollection<residents>(residents);
 
+            ///Нужно чтобы был добавлен сначала пользователь
             StAddResident.IsEnabled = false;
             StAddResident.Visibility = Visibility.Hidden;
 
             freeApartmentKnown();
         }
 
+        /// <summary>
+        /// Добавляет нового резидента
+        /// </summary>
         private void btAddRes_Click(object sender, RoutedEventArgs e)
         {
-            //айди созданного пользователя
             var userList = bdMod.GetContext(true).users.ToList();
-            List<users> ids = new List<users>();
-            List<int> idPols = new List<int>();
+            List<int> idPols = new List<int>(); ///Для поиска юзера, чтобы связать нового пользователя с новым резидентом
 
             foreach (var item in userList)
             {
@@ -60,6 +49,7 @@ namespace pr_3_pogram_mod.Pages
 
             int oldId = idPols.Max();
 
+            ///Обращение к БД, для добавления резидента
             using (var context = new bdMod())
             {
                 int aparId = 0;
@@ -79,7 +69,7 @@ namespace pr_3_pogram_mod.Pages
                     Convert.ToDecimal(account_bal.Text)
                 );
 
-
+                ///Проводится валидация данных нового резидента
                 var contextVal = new ValidationContext(newRes);
                 var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
 
@@ -100,19 +90,21 @@ namespace pr_3_pogram_mod.Pages
                 }
             }
 
-            Console.WriteLine(oldId);
+            //Console.WriteLine(oldId);
 
-            foreach (var item in userList)
-            {
-                idPols.Add(item.id);
-                Console.WriteLine(idPols);
-            }
-
+            //foreach (var item in userList)
+            //{
+            //    idPols.Add(item.id);
+            //    Console.WriteLine(idPols);
+            //}
         }
 
         List<int> freeApartment = new List<int>();
         List<int> freeApartmentNumber = new List<int>();
 
+        /// <summary>
+        /// Находит свободные апартаменты, чтобы указать их у резидента
+        /// </summary>
         private void freeApartmentKnown()
         {
             var allApartments = bdMod.GetContext(true).apartments.ToList();
@@ -122,17 +114,19 @@ namespace pr_3_pogram_mod.Pages
             {
                 freeApartment.Add(apartment.id);
             }
-
+            
+            ///Убрать лишние id апартаментов, чтобы остались только свободные
             for (int i = 0; i < allResidents.Count; i++)
             {
                 if (allResidents[i].apartment_id.HasValue)
                 {
                     freeApartment.Remove(allResidents[i].apartment_id.Value);
+
+                    Console.WriteLine(freeApartment[i]);
                 }
             }
 
-            //Console.WriteLine(freeApartment.Count);
-
+            ///Сопоставить id свободных апартаментов с их номерами
             for (int i = 0; i < freeApartment.Count; i++)
             {
                 var apartment = allApartments.FirstOrDefault(a => a.id == freeApartment[i]);
@@ -140,16 +134,17 @@ namespace pr_3_pogram_mod.Pages
                 if (apartment != null && apartment.number != null)
                 {
                     freeApartmentNumber.Add(Convert.ToInt32(apartment.number));
-                    //Console.WriteLine(apartment.number);
                 }
             }
 
             comboBoxNumberApart.ItemsSource = freeApartmentNumber;
         }
 
+        /// <summary>
+        /// Добавляет нового пользователя
+        /// </summary>
         private void btAddPol_Click_1(object sender, RoutedEventArgs e)
         {
-
             using (var context = new bdMod())
             {
                 users newUser = new users(
@@ -160,6 +155,7 @@ namespace pr_3_pogram_mod.Pages
                     true
                     );
 
+                ///Проводится валидация данных нового пользователя
                 var contextVal = new ValidationContext(newUser);
                 var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
 
@@ -195,10 +191,11 @@ namespace pr_3_pogram_mod.Pages
 
             StAddResident.IsEnabled = true;
 
-            //Определенеи свободных комнат
-
         }
 
+        /// <summary>
+        /// Когда textBox пустой, заменяет на символ нолика  
+        /// </summary>
         private void res_count_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox textBox = sender as TextBox;

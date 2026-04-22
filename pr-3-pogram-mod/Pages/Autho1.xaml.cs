@@ -15,11 +15,11 @@ namespace pr_3_pogram_mod.Pages
 {
     public partial class Autho1 : Page
     {
-        private users checkUser;
+        private users checkUser; // конкретный пользователь, который пытается зайти
 
-        private bool isTwoAuthorization = true;
+        private bool isTwoaAuthentication = false; // флаг, проводить или не проводить 2факторную аутнетификацию 
         
-        int click;
+        int click; // счетчик нажатий чтобы вывести таймер когда нужно
 
         DispatcherTimer timer = new DispatcherTimer();
         private int seconds = 11;
@@ -37,6 +37,9 @@ namespace pr_3_pogram_mod.Pages
             hide_ui_captha();
         }
 
+        /// <summary>
+        /// Скрывает поле капчи когда нужно
+        /// </summary>
         private void hide_ui_captha()
         {
             txtBoxCaptha.Clear();
@@ -47,6 +50,9 @@ namespace pr_3_pogram_mod.Pages
             click = 0;
         }
 
+        /// <summary>
+        /// Вызывает метод для создания капчи
+        /// </summary>
         private void GenerateCapctcha()
         {
             capthaPanel.Visibility = Visibility.Visible;
@@ -56,16 +62,20 @@ namespace pr_3_pogram_mod.Pages
             txtBlockCaptha.TextDecorations = TextDecorations.Strikethrough;
         }
 
+        /// <summary>
+        /// Метод который проверяет есть ли пользователь, его роль нужно ли проверяет по 2FA, а также блокринкут ввод и выводит таймер
+        /// </summary>
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
             click += 1;
             string login = txtLogin.Text.Trim();
             string password = passwordBox.Password.Trim();
-            string passwordH = Hash.HashPassword(password);
+            string passwordH = Hash.HashPassword(password); //захэшированный пароль чтобы сверить с тем что в БД
             bdMod bd = new bdMod();
             
             checkUser = bd.users.Where(x => x.username == login && x.password == passwordH).FirstOrDefault();
             
+            ///Проверка кликов, чтобы понять что сейчас выводить
             if (click == 1)
             {
                 if (checkUser != null)
@@ -108,17 +118,22 @@ namespace pr_3_pogram_mod.Pages
                 timer.Start();
             }
 
+           /// <summary>
+           /// Локальная функция для нахождения пользователя 
+           /// </summary>
             void check_user()
             {
                 var user_role = bd.user_roles.Where(x => checkUser.role_id == x.id).FirstOrDefault();
-
+                // Находим роль пользователя который заходит
                 if (user_role.role == "admin" || user_role.role == "employee")
                 {
+                    //если это работник, находит его и вызывает метод для проверки рабочий ли час сейчас
                     var user_name = bd.employees.Where(x => checkUser.id == x.user_id).FirstOrDefault();
                     bool isTime = hello_msg(user_name, user_role.role);
                     if (isTime)
                     {
-                        if (isTwoAuthorization)
+                        //Если стои флаг, то переход на страницу где проходит 2FA иначе просто переходит на стрицу, которая соответствует роли пользователя
+                        if (isTwoaAuthentication)
                         {
                             NavigationService.Navigate(new Pages.CheckTwoAuth(checkUser, user_role, user_name, null));   
                         }
@@ -133,9 +148,10 @@ namespace pr_3_pogram_mod.Pages
                 }
                 if (user_role.role == "resident")
                 {
+                    //Если не работник, находит резедента и переходит к его странице 
                     var user_name = bd.residents.Where(x => checkUser.id == x.user_id).FirstOrDefault();
 
-                    if (isTwoAuthorization)
+                    if (isTwoaAuthentication)
                     {
 
                     }
@@ -148,6 +164,12 @@ namespace pr_3_pogram_mod.Pages
             }
         }
 
+        /// <summary>
+        /// Проверяет какое сейчас время и в зависимости от часа позволяет сотруднику войти или сообщает что сейчас не рабочее время
+        /// </summary>
+        /// <param name="employee_user">Конкретный сотрудник</param>
+        /// <param name="role">Роль этого сотрудника</param>
+        /// <returns></returns>
         private bool hello_msg(employees employee_user, string role)
         {
             DateTime todayTime = DateTime.Now;
@@ -159,7 +181,7 @@ namespace pr_3_pogram_mod.Pages
             int minute = now.Minute;
             int totalMinutes = hour * 60 + minute;
 
-            if (totalMinutes >= 10 * 60 && totalMinutes <= 19 * 60)
+            if (totalMinutes >= 8 * 60 && totalMinutes <= 19 * 60)
             {
                 if (totalMinutes >= 10 * 60 && totalMinutes <= 12 * 60)
                 {
@@ -185,6 +207,11 @@ namespace pr_3_pogram_mod.Pages
             return true;
         }
 
+        /// <summary>
+        /// Приветствует резидента и сообщает ему время
+        /// </summary>
+        /// <param name="resident_user"></param>
+        /// <param name="role"></param>
         private void hello_msg(residents resident_user, string role)
         {
             DateTime todayTime = DateTime.Now;
@@ -193,6 +220,9 @@ namespace pr_3_pogram_mod.Pages
 
         }
 
+        /// <summary>
+        /// Каждый определенный тайминг вызывается и отсчитывает секунды до снятия блока
+        /// </summary>
         private void timer_Tick(object sender, EventArgs e)
         {
            seconds--;
@@ -207,6 +237,11 @@ namespace pr_3_pogram_mod.Pages
                 block(true);
             }
         }
+
+        /// <summary>
+        /// Отключает или включает контролы для таймера
+        /// </summary>
+        /// <param name="blockB"></param>
         private void block(bool blockB)
         {
             timeBlock.Content = "";
@@ -218,6 +253,12 @@ namespace pr_3_pogram_mod.Pages
             btnMail.IsEnabled = blockB;
         }
 
+        /// <summary>
+        /// Осуществляет переход на определенную страницу исходя от сотрудника
+        /// </summary>
+        /// <param name="_role">Роль пользователя исходя из которой осуществляется переход</param>
+        /// <param name="user">Сам юзер</param>
+        /// <param name="employee">Информация о юзере</param>
         private void LoadPage(string _role, users user, employees employee)
         {
             click = 0;
@@ -232,6 +273,12 @@ namespace pr_3_pogram_mod.Pages
             }
         }
 
+        /// <summary>
+        /// Осуществляет переход на определенную страницу резидента
+        /// </summary>
+        /// <param name="_role">Роль пользователя исходя из которой осуществляется переход</param>
+        /// <param name="user">Сам юзер</param>
+        /// <param name="resident">Инофрмация о юзере</param>
         private void LoadPage(string _role, users user, residents resident)
         {
             click = 0;

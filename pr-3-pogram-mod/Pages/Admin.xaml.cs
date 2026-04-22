@@ -10,13 +10,8 @@ namespace pr_3_pogram_mod.Pages
 {
     public partial class Admin : Page
     {
-
-        class Employee
-        {
-
-        }
-
-        private ObservableCollection<residents> _residents;
+        
+        private ObservableCollection<residents> _residents; // список для хранения пользователей, позваоляет обновлять UI в реальном времени
 
         public Admin(users user, string role, employees employee)
         {
@@ -26,6 +21,9 @@ namespace pr_3_pogram_mod.Pages
             UpdateListViewTemplate(); 
         }
 
+        /// <summary>
+        /// Загружеает данные резидентов из БД и вызывает метод их сортировки
+        /// </summary>
         private void LoadResidents()
         {
             var residents = bdMod.GetContext(true).residents.ToList();
@@ -58,6 +56,10 @@ namespace pr_3_pogram_mod.Pages
             }
         }
 
+        /// <summary>
+        /// Создает карточку резидента со всеми его данными
+        /// </summary>
+        /// <returns>Возвращает template, который содержит информацию о том как должны выгдядеть элементы в ListView</returns>
         private DataTemplate CreateFullTemplate()
         {
             var template = new DataTemplate();
@@ -110,6 +112,10 @@ namespace pr_3_pogram_mod.Pages
             return template;
         }
 
+        /// <summary>
+        /// Создает карточку резидента, где вывоодится только имя
+        /// </summary>
+        /// <returns>Возвращает template, который содержит информацию о том как должны выгдядеть элементы в ListView</returns>
         private DataTemplate CreateNameOnlyTemplate()
         {
             var template = new DataTemplate();
@@ -144,6 +150,10 @@ namespace pr_3_pogram_mod.Pages
             return template;
         }
 
+        /// <summary>
+        /// Создает карточку резидента, где вывоодится только фамилия
+        /// </summary>
+        /// <returns>Возвращает template, который содержит информацию о том как должны выгдядеть элементы в ListView</returns>
         private DataTemplate CreateSurnameOnlyTemplate()
         {
             var template = new DataTemplate();
@@ -178,6 +188,9 @@ namespace pr_3_pogram_mod.Pages
             return template;
         }
 
+        /// <summary>
+        /// Сортирует список резедентов по имени, фамилии и сброс сортировки
+        /// </summary>
         private void SortResidents()
         {
             if (_residents == null) return;
@@ -202,16 +215,21 @@ namespace pr_3_pogram_mod.Pages
             SortResidents(); 
         }
 
+        /// <summary>
+        /// Фильтрует поиск пользоватлей по имени и фамилии
+        /// </summary>
         private void tbNameFind_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = tbNameFind.Text.ToLower().Trim();
 
+            /// Если поле ввода для сортировки пусто, просто отсортировать их также по выбору
             if (string.IsNullOrEmpty(searchText))
             {
                 SortResidents();
                 return;
             }
 
+            ///простой фильтр, которые ищет совпадение символов
             var filtered = _residents
                 .Where(r => r.name.ToLower().Contains(searchText) ||
                            r.surname.ToLower().Contains(searchText))
@@ -229,6 +247,9 @@ namespace pr_3_pogram_mod.Pages
             }
         }
 
+        /// <summary>
+        /// Загружает свежие данные из БД, при необходимости
+        /// </summary>
         private void updateInfo()
         {
             var freshData = bdMod.GetContext(true).residents.ToList();

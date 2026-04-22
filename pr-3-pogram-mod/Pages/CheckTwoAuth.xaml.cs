@@ -19,15 +19,24 @@ using System.Windows.Shapes;
 
 namespace pr_3_pogram_mod.Pages
 {
+
     public partial class CheckTwoAuth : Page
     {
         private int code;
 
-        private users user { get; set; }
-        private user_roles roles { get; set; }
-        private employees? employer { get; set; }
-        private residents? resident { get; set; }
+        private users user;
+        private user_roles roles;
+        private employees? employer;
+        private residents? resident;
 
+        /// <summary>
+        /// Принимает и инициализирует данные пользователя (роль, сотрудника, резидента)
+        /// для последующего использования на странице    
+        /// </summary>
+        /// <param name="useR">Отвечяет за данные именно user`а, почта, пароль</param>
+        /// <param name="roleS">Отвечает за данные роли пользователя</param>
+        /// <param name="employeR">Данные работника связанные с пользователем, может быть null</param>
+        /// <param name="residenT">Данные резидента связанные с пользователем, может быть null</param>
         public CheckTwoAuth(users useR, user_roles roleS, employees? employeR, residents? residenT)
         {
             InitializeComponent();
@@ -40,13 +49,16 @@ namespace pr_3_pogram_mod.Pages
             CreateMail();
         }
 
+        /// <summary>
+        /// Метод для создания и кода для проверки пользователя и вызова метода для отправки сообщения
+        /// </summary>
         private void CreateMail()
         {
             Random random = new Random();
             code = random.Next(1000, 10000);
-            SendMail.CreateMail(user.email, code);
+            SendMail.CreateMail(user.email, code, "forAny");
         }
-
+        
         private void btTwoAuth_Click(object sender, RoutedEventArgs e)
         {
             if (resident == null && code == Convert.ToInt32(tbTwoAuth.Text))
