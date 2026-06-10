@@ -12,6 +12,7 @@ namespace pr_3_pogram_mod
         public MainWindow()
         {
             InitializeComponent();
+            //FrMain.Navigate(new Pages.TestPage());
             FrMain.Navigate(new Pages.Autho1());
         }
 

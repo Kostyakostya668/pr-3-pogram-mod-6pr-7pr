@@ -38,20 +38,23 @@ namespace pr_3_pogram_mod.bd
         public virtual DbSet<ownership_types> ownership_types { get; set; }
         public virtual DbSet<payment_methods> payment_methods { get; set; }
         public virtual DbSet<payments> payments { get; set; }
-        public virtual DbSet<request_statuses> request_statuses { get; set; }
         public virtual DbSet<residents> residents { get; set; }
         public virtual DbSet<service_requests> service_requests { get; set; }
+        public virtual DbSet<service_statuses> service_statuses { get; set; }
         public virtual DbSet<service_types> service_types { get; set; }
         public virtual DbSet<services> services { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<user_roles> user_roles { get; set; }
         public virtual DbSet<users> users { get; set; }
-
+    
         public static bdMod GetContext(bool check)
         {
             if (context == null || check)
+            {
                 context = new bdMod();
+            }
             return context;
         }
+    
     }
 }

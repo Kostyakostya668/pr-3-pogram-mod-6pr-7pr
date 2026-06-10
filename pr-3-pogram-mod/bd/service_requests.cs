@@ -17,15 +17,16 @@ namespace pr_3_pogram_mod.bd
         public int id { get; set; }
         public Nullable<int> resident_id { get; set; }
         public Nullable<int> employee_id { get; set; }
-        public string type { get; set; }
+        public int type_id { get; set; }
         public string description { get; set; }
-        public Nullable<int> status_id { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
         public Nullable<System.DateTime> assigned_at { get; set; }
         public Nullable<System.DateTime> completed_at { get; set; }
+        public Nullable<int> status_id { get; set; }
     
         public virtual employees employees { get; set; }
-        public virtual request_statuses request_statuses { get; set; }
         public virtual residents residents { get; set; }
+        public virtual service_statuses service_statuses { get; set; }
+        public virtual service_types service_types { get; set; }
     }
 }

@@ -14,7 +14,12 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="textName" Grid.Row="2" Margin="300, 10" TextAlignment="Center"/>
+        <TextBlock x:Name="textName" Grid.Row="0" Margin="5, 5, 400, 5" TextAlignment="Left"/>
 
+        <StackPanel x:Name="spUserOn" Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="Информация о заявках для УК:" VerticalAlignment="Center"/>
+            <Button x:Name="btPrintInfo" Content="Данные в PDF" Click="btPrintInfo_Click"/>
+        </StackPanel>
+        
     </Grid>
 </Page>

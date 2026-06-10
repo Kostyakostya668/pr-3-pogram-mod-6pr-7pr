@@ -21,14 +21,29 @@ namespace pr_3_pogram_mod.Pages
     /// </summary>
     public partial class Client : Page
     {
+        users thisUser;
+        residents thisResident;
+
         public Client(users user, string role, residents resident)
         {
             InitializeComponent();
             if (user == null || role == null || resident == null)
+            {
                 textName.Text = "Вы вошли как гость";
-            
-            else 
+                spUserOn.Visibility = Visibility.Hidden;
+            }
+            else
+            {
                 textName.Text = $"Пользователь: {role}\n{resident.surname} {resident.name}";
+                thisUser = user; thisResident = resident;
+                spUserOn.Visibility = Visibility.Visible;
+            } 
+        }
+
+        private void btPrintInfo_Click(object sender, RoutedEventArgs e)
+        {
+            DocPage.DocPdfInfoRes docPdf = new DocPage.DocPdfInfoRes(thisUser, thisResident);
+            docPdf.ShowDialog();
         }
     }
 

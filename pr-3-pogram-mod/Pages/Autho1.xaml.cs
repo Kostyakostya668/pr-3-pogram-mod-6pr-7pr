@@ -28,7 +28,7 @@ namespace pr_3_pogram_mod.Pages
         {
             InitializeComponent();
             capthaPanel.Visibility = Visibility.Hidden;
-            timer.Tick += new EventHandler(timer_Tick);
+            timer.Tick += new EventHandler(timer_Tick); // события для того чтобы таймер работал
         }
 
         private void btnEnterGuest_Click(object sender, RoutedEventArgs e)

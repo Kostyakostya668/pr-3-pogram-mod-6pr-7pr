@@ -16,12 +16,6 @@ namespace pr_3_pogram_mod.bd
     public partial class residents
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public residents()
-        {
-            this.charges = new HashSet<charges>();
-            this.payments = new HashSet<payments>();
-            this.service_requests = new HashSet<service_requests>();
-        }
 
         public residents(int user_id, int apartment_id, string name, string surname, string phone, int residents_count, decimal account_balance)
         {
@@ -33,6 +27,13 @@ namespace pr_3_pogram_mod.bd
             this.residents_count = residents_count;
             this.account_balance = account_balance;
 
+            this.charges = new HashSet<charges>();
+            this.payments = new HashSet<payments>();
+            this.service_requests = new HashSet<service_requests>();
+        }
+
+        public residents()
+        {
             this.charges = new HashSet<charges>();
             this.payments = new HashSet<payments>();
             this.service_requests = new HashSet<service_requests>();
@@ -53,11 +54,10 @@ namespace pr_3_pogram_mod.bd
         [StringLength(20, MinimumLength = 2, ErrorMessage = "Имя должно быть мимнимум 2 и макс 40")]
         public string surname { get; set; }
 
-        [Required(ErrorMessage ="Введите номер телефона")]
-        [Phone(ErrorMessage ="Неккоректнй номер телефона")]
+        [Required(ErrorMessage = "Введите номер телефона")]
+        [Phone(ErrorMessage = "Неккоректнй номер телефона")]
         public string phone { get; set; }
 
-        //private int _residents_count = 0;
         [Required(ErrorMessage = "Количксто жильцов должно быть заполнено")]
         [Range(1, int.MaxValue, ErrorMessage = "Количество жильцов > 0")]
         public Nullable<int> residents_count { get; set; }

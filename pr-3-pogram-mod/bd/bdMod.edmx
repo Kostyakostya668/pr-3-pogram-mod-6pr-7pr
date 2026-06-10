@@ -116,14 +116,6 @@
           <Property Name="amount" Type="decimal" Precision="8" Scale="2" />
           <Property Name="payment_method_id" Type="int" />
         </EntityType>
-        <EntityType Name="request_statuses">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="description" Type="nvarchar" MaxLength="100" />
-        </EntityType>
         <EntityType Name="residents">
           <Key>
             <PropertyRef Name="id" />
@@ -144,12 +136,20 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="resident_id" Type="int" />
           <Property Name="employee_id" Type="int" />
-          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="type_id" Type="int" Nullable="false" />
           <Property Name="description" Type="nvarchar(max)" />
-          <Property Name="status_id" Type="int" />
           <Property Name="created_at" Type="datetime2" Precision="7" />
           <Property Name="assigned_at" Type="datetime2" Precision="7" />
           <Property Name="completed_at" Type="datetime2" Precision="7" />
+          <Property Name="status_id" Type="int" />
+        </EntityType>
+        <EntityType Name="service_statuses">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status_description" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="service_types">
           <Key>
@@ -382,18 +382,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__service_r__statu__6D0D32F4">
-          <End Role="request_statuses" Type="Self.request_statuses" Multiplicity="0..1" />
-          <End Role="service_requests" Type="Self.service_requests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="request_statuses">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="service_requests">
-              <PropertyRef Name="status_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__services__calcul__6FE99F9F">
           <End Role="calculation_bases" Type="Self.calculation_bases" Multiplicity="0..1" />
           <End Role="services" Type="Self.services" Multiplicity="*" />
@@ -430,6 +418,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_service_requests_service_statuses">
+          <End Role="service_statuses" Type="Self.service_statuses" Multiplicity="0..1" />
+          <End Role="service_requests" Type="Self.service_requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service_statuses">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="service_requests">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequests_ServiceTypes">
+          <End Role="service_types" Type="Self.service_types" Multiplicity="1" />
+          <End Role="service_requests" Type="Self.service_requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="service_requests">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище House_managementModelContainer">
           <EntitySet Name="apartments" EntityType="Self.apartments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="calculation_bases" EntityType="Self.calculation_bases" Schema="dbo" store:Type="Tables" />
@@ -442,9 +454,9 @@
           <EntitySet Name="ownership_types" EntityType="Self.ownership_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payment_methods" EntityType="Self.payment_methods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payments" EntityType="Self.payments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="request_statuses" EntityType="Self.request_statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="residents" EntityType="Self.residents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="service_requests" EntityType="Self.service_requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="service_statuses" EntityType="Self.service_statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="service_types" EntityType="Self.service_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="services" EntityType="Self.services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -510,10 +522,6 @@
             <End Role="residents" EntitySet="residents" />
             <End Role="service_requests" EntitySet="service_requests" />
           </AssociationSet>
-          <AssociationSet Name="FK__service_r__statu__6D0D32F4" Association="Self.FK__service_r__statu__6D0D32F4">
-            <End Role="request_statuses" EntitySet="request_statuses" />
-            <End Role="service_requests" EntitySet="service_requests" />
-          </AssociationSet>
           <AssociationSet Name="FK__services__calcul__6FE99F9F" Association="Self.FK__services__calcul__6FE99F9F">
             <End Role="calculation_bases" EntitySet="calculation_bases" />
             <End Role="services" EntitySet="services" />
@@ -525,6 +533,14 @@
           <AssociationSet Name="FK__users__role_id__70DDC3D8" Association="Self.FK__users__role_id__70DDC3D8">
             <End Role="user_roles" EntitySet="user_roles" />
             <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_service_requests_service_statuses" Association="Self.FK_service_requests_service_statuses">
+            <End Role="service_statuses" EntitySet="service_statuses" />
+            <End Role="service_requests" EntitySet="service_requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequests_ServiceTypes" Association="Self.FK_ServiceRequests_ServiceTypes">
+            <End Role="service_types" EntitySet="service_types" />
+            <End Role="service_requests" EntitySet="service_requests" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -663,15 +679,6 @@
           <NavigationProperty Name="payment_methods" Relationship="Self.FK__payments__paymen__693CA210" FromRole="payments" ToRole="payment_methods" />
           <NavigationProperty Name="residents" Relationship="Self.FK__payments__reside__68487DD7" FromRole="payments" ToRole="residents" />
         </EntityType>
-        <EntityType Name="request_statuses">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="service_requests" Relationship="Self.FK__service_r__statu__6D0D32F4" FromRole="request_statuses" ToRole="service_requests" />
-        </EntityType>
         <EntityType Name="residents">
           <Key>
             <PropertyRef Name="id" />
@@ -697,15 +704,25 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="resident_id" Type="Int32" />
           <Property Name="employee_id" Type="Int32" />
-          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type_id" Type="Int32" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="status_id" Type="Int32" />
           <Property Name="created_at" Type="DateTime" Precision="7" />
           <Property Name="assigned_at" Type="DateTime" Precision="7" />
           <Property Name="completed_at" Type="DateTime" Precision="7" />
+          <Property Name="status_id" Type="Int32" />
           <NavigationProperty Name="employees" Relationship="Self.FK__service_r__emplo__6E01572D" FromRole="service_requests" ToRole="employees" />
-          <NavigationProperty Name="request_statuses" Relationship="Self.FK__service_r__statu__6D0D32F4" FromRole="service_requests" ToRole="request_statuses" />
           <NavigationProperty Name="residents" Relationship="Self.FK__service_r__resid__6C190EBB" FromRole="service_requests" ToRole="residents" />
+          <NavigationProperty Name="service_statuses" Relationship="Self.FK_service_requests_service_statuses" FromRole="service_requests" ToRole="service_statuses" />
+          <NavigationProperty Name="service_types" Relationship="Self.FK_ServiceRequests_ServiceTypes" FromRole="service_requests" ToRole="service_types" />
+        </EntityType>
+        <EntityType Name="service_statuses">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status_description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="service_requests" Relationship="Self.FK_service_requests_service_statuses" FromRole="service_statuses" ToRole="service_requests" />
         </EntityType>
         <EntityType Name="service_types">
           <Key>
@@ -714,6 +731,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="service_requests" Relationship="Self.FK_ServiceRequests_ServiceTypes" FromRole="service_types" ToRole="service_requests" />
           <NavigationProperty Name="services" Relationship="Self.FK__services__type_i__6EF57B66" FromRole="service_types" ToRole="services" />
         </EntityType>
         <EntityType Name="services">
@@ -935,18 +953,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__service_r__statu__6D0D32F4">
-          <End Role="request_statuses" Type="Self.request_statuses" Multiplicity="0..1" />
-          <End Role="service_requests" Type="Self.service_requests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="request_statuses">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="service_requests">
-              <PropertyRef Name="status_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__residents__user___6B24EA82">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="residents" Type="Self.residents" Multiplicity="*" />
@@ -968,6 +974,30 @@
             </Principal>
             <Dependent Role="service_requests">
               <PropertyRef Name="resident_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_service_requests_service_statuses">
+          <End Role="service_statuses" Type="Self.service_statuses" Multiplicity="0..1" />
+          <End Role="service_requests" Type="Self.service_requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service_statuses">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="service_requests">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequests_ServiceTypes">
+          <End Role="service_types" Type="Self.service_types" Multiplicity="1" />
+          <End Role="service_requests" Type="Self.service_requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="service_requests">
+              <PropertyRef Name="type_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1007,9 +1037,9 @@
           <EntitySet Name="ownership_types" EntityType="Self.ownership_types" />
           <EntitySet Name="payment_methods" EntityType="Self.payment_methods" />
           <EntitySet Name="payments" EntityType="Self.payments" />
-          <EntitySet Name="request_statuses" EntityType="Self.request_statuses" />
           <EntitySet Name="residents" EntityType="Self.residents" />
           <EntitySet Name="service_requests" EntityType="Self.service_requests" />
+          <EntitySet Name="service_statuses" EntityType="Self.service_statuses" />
           <EntitySet Name="service_types" EntityType="Self.service_types" />
           <EntitySet Name="services" EntityType="Self.services" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
@@ -1071,16 +1101,20 @@
             <End Role="residents" EntitySet="residents" />
             <End Role="payments" EntitySet="payments" />
           </AssociationSet>
-          <AssociationSet Name="FK__service_r__statu__6D0D32F4" Association="Self.FK__service_r__statu__6D0D32F4">
-            <End Role="request_statuses" EntitySet="request_statuses" />
-            <End Role="service_requests" EntitySet="service_requests" />
-          </AssociationSet>
           <AssociationSet Name="FK__residents__user___6B24EA82" Association="Self.FK__residents__user___6B24EA82">
             <End Role="users" EntitySet="users" />
             <End Role="residents" EntitySet="residents" />
           </AssociationSet>
           <AssociationSet Name="FK__service_r__resid__6C190EBB" Association="Self.FK__service_r__resid__6C190EBB">
             <End Role="residents" EntitySet="residents" />
+            <End Role="service_requests" EntitySet="service_requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_service_requests_service_statuses" Association="Self.FK_service_requests_service_statuses">
+            <End Role="service_statuses" EntitySet="service_statuses" />
+            <End Role="service_requests" EntitySet="service_requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequests_ServiceTypes" Association="Self.FK_ServiceRequests_ServiceTypes">
+            <End Role="service_types" EntitySet="service_types" />
             <End Role="service_requests" EntitySet="service_requests" />
           </AssociationSet>
           <AssociationSet Name="FK__services__type_i__6EF57B66" Association="Self.FK__services__type_i__6EF57B66">
@@ -1220,15 +1254,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="request_statuses">
-            <EntityTypeMapping TypeName="House_managementModel.request_statuses">
-              <MappingFragment StoreEntitySet="request_statuses">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="residents">
             <EntityTypeMapping TypeName="House_managementModel.residents">
               <MappingFragment StoreEntitySet="residents">
@@ -1249,12 +1274,21 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="resident_id" ColumnName="resident_id" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
                 <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="status_id" ColumnName="status_id" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="assigned_at" ColumnName="assigned_at" />
                 <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="service_statuses">
+            <EntityTypeMapping TypeName="House_managementModel.service_statuses">
+              <MappingFragment StoreEntitySet="service_statuses">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="status_name" ColumnName="status_name" />
+                <ScalarProperty Name="status_description" ColumnName="status_description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

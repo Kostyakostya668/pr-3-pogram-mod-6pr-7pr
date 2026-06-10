@@ -4,13 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace pr_3_pogram_mod.Pages
 {
     public partial class Admin : Page
     {
-        
+
         private ObservableCollection<residents> _residents; // список для хранения пользователей, позваоляет обновлять UI в реальном времени
 
         public Admin(users user, string role, employees employee)
@@ -18,7 +19,7 @@ namespace pr_3_pogram_mod.Pages
             InitializeComponent();
             textName.Text = $"Пользователь: {role}\n{employee.surname} {employee.name}";
             LoadResidents();
-            UpdateListViewTemplate(); 
+            UpdateListViewTemplate();
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace pr_3_pogram_mod.Pages
             var rowDef1 = new FrameworkElementFactory(typeof(RowDefinition));
             rowDef1.SetValue(RowDefinition.HeightProperty, new GridLength(50));
             var rowDef2 = new FrameworkElementFactory(typeof(RowDefinition));
-            rowDef2.SetValue(RowDefinition.HeightProperty, new GridLength(60));
+            rowDef2.SetValue(RowDefinition.HeightProperty, new GridLength(65));
 
             grid.AppendChild(rowDef1);
             grid.AppendChild(rowDef2);
@@ -211,8 +212,8 @@ namespace pr_3_pogram_mod.Pages
 
         private void chosenSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateListViewTemplate(); 
-            SortResidents(); 
+            UpdateListViewTemplate();
+            SortResidents();
         }
 
         /// <summary>
@@ -269,6 +270,31 @@ namespace pr_3_pogram_mod.Pages
         private void btAddRes_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Pages.AddResident());
+        }
+
+        private void btPrint_Click(object sender, RoutedEventArgs e)
+        {
+            FlowDocument doc = flowDocReader.Document;
+
+            if (doc == null)
+            {
+                MessageBox.Show("Документ не найден.");
+                return;
+            }
+
+            // Создаем диалог печати
+            PrintDialog printDialog = new PrintDialog();
+
+            // Пользователю рекомендуется выбрать принтер "Microsoft Print toPDF"
+            if (printDialog.ShowDialog() == true)
+            {
+                // Печатаем документ. FlowDocument реализует интерфейс IDocumentPaginatorSource,
+                // который предоставляет DocumentPaginator, необходимый для печати.
+
+                IDocumentPaginatorSource idpSource = doc;
+                printDialog.PrintDocument(idpSource.DocumentPaginator, "Список резидентов");
+            }
+
         }
     }
 }

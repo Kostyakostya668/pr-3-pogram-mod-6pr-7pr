@@ -1,0 +1,40 @@
+﻿<Window x:Class="pr_3_pogram_mod.Pages.TestPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pr_3_pogram_mod.Pages"
+        mc:Ignorable="d"
+        Title="TestPage" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock x:Name="namePage" Text="эм"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <FlowDocumentScrollViewer>
+                <FlowDocument>
+                    <Paragraph TextIndent="20">
+                        <Run>Тест</Run>
+                    </Paragraph>
+                    <List MarkerStyle="UpperRoman">
+                        <ListItem>
+                            <Paragraph>опа</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>Че</Paragraph>
+                        </ListItem>
+                    </List>
+                    
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </StackPanel>
+        
+        
+    </Grid>
+</Window>

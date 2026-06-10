@@ -17,6 +17,7 @@ namespace pr_3_pogram_mod.bd
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public service_types()
         {
+            this.service_requests = new HashSet<service_requests>();
             this.services = new HashSet<services>();
         }
     
@@ -24,6 +25,8 @@ namespace pr_3_pogram_mod.bd
         public string name { get; set; }
         public string description { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<service_requests> service_requests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<services> services { get; set; }
     }

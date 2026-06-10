@@ -29,24 +29,33 @@
             </ComboBox>
             <Button x:Name="brRes" Content="Обновить" Click="brRes_Click" Margin="5,0"/>
             <Button x:Name="btAddRes" Content="Добавить" Click="btAddRes_Click" Margin="5,0"/>
+            <Button x:Name="btPrint" Content="Печать списка" Click="btPrint_Click"  Margin="5,0"/>
         </StackPanel>
 
-        <ListView Name="lvRes" Grid.Row="2" Margin="10" MouseDoubleClick="lvRes_MouseDoubleClick" 
-                  HorizontalAlignment="Stretch">
+        <FlowDocumentReader x:Name="flowDocReader" Grid.Row="2" ViewingMode="Scroll">
+            <FlowDocument PageWidth="Auto">
+                <BlockUIContainer>
+                    
+                    <ListView Name="lvRes" Grid.Row="2" Margin="10" MouseDoubleClick="lvRes_MouseDoubleClick" 
+                              HorizontalAlignment="Stretch">
 
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Margin" Value="5"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="5"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-        </ListView>
+                    </ListView>
+                </BlockUIContainer>
+            </FlowDocument>
+        </FlowDocumentReader>
+
     </Grid>
 </Page>

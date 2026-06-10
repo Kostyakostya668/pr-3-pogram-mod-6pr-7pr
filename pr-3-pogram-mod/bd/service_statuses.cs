@@ -12,17 +12,17 @@ namespace pr_3_pogram_mod.bd
     using System;
     using System.Collections.Generic;
     
-    public partial class request_statuses
+    public partial class service_statuses
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public request_statuses()
+        public service_statuses()
         {
             this.service_requests = new HashSet<service_requests>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public int status_id { get; set; }
+        public string status_name { get; set; }
+        public string status_description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<service_requests> service_requests { get; set; }

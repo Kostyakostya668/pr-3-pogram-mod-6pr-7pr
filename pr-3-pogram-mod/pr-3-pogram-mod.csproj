@@ -238,76 +238,76 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="bd\apartments.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
-    <Compile Include="bd\bdModel.Context.cs">
+    <Compile Include="bd\bdMod.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>bdModel.Context.tt</DependentUpon>
+      <DependentUpon>bdMod.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="bd\bdModel.cs">
+    <Compile Include="bd\bdMod.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
-    <Compile Include="bd\bdModel.Designer.cs">
+    <Compile Include="bd\bdMod.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>bdModel.edmx</DependentUpon>
+      <DependentUpon>bdMod.edmx</DependentUpon>
     </Compile>
     <Compile Include="bd\calculation_bases.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\calculation_types.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\charges.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\employees.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\houses.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\meters.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\meter_types.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\ownership_types.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\payments.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\payment_methods.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="bd\request_statuses.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\residents.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\services.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\service_requests.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bd\service_statuses.cs">
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\service_types.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\sysdiagrams.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\users.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="bd\user_roles.cs">
-      <DependentUpon>bdModel.tt</DependentUpon>
+      <DependentUpon>bdMod.tt</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddResident.xaml.cs">
       <DependentUpon>AddResident.xaml</DependentUpon>
@@ -324,11 +324,17 @@
     <Compile Include="Pages\DiscoverHash.xaml.cs">
       <DependentUpon>DiscoverHash.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DocPage\DocPdfInfoRes.xaml.cs">
+      <DependentUpon>DocPdfInfoRes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Employee.xaml.cs">
       <DependentUpon>Employee.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SendPassMess.xaml.cs">
       <DependentUpon>SendPassMess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\CaptchaGenerator.cs" />
     <Compile Include="Services\Hash.cs" />
@@ -373,11 +379,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\DocPage\DocPdfInfoRes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Employee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SendPassMess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -406,12 +420,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="bd\bdModel.edmx">
+    <EntityDeploy Include="bd\bdMod.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>bdModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>bdMod.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="bd\bdModel.edmx.diagram">
-      <DependentUpon>bdModel.edmx</DependentUpon>
+    <None Include="bd\bdMod.edmx.diagram">
+      <DependentUpon>bdMod.edmx</DependentUpon>
     </None>
     <None Include="config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -435,17 +449,19 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bd\bdModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>bdModel.edmx</DependentUpon>
-      <LastGenOutput>bdModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="bd\bdModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>bdModel.edmx</DependentUpon>
-      <LastGenOutput>bdModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="Resources\iconUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bd\bdMod.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>bdMod.edmx</DependentUpon>
+      <LastGenOutput>bdMod.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="bd\bdMod.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>bdMod.edmx</DependentUpon>
+      <LastGenOutput>bdMod.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />

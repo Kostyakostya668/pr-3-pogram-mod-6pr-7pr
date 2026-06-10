@@ -16,6 +16,7 @@ namespace pr_3_pogram_mod.bd
     public partial class users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+
         public users(string username, string email, string password, int role_id, bool isActive)
         {
             this.username = username;
@@ -33,23 +34,23 @@ namespace pr_3_pogram_mod.bd
             this.employees = new HashSet<employees>();
             this.residents = new HashSet<residents>();
         }
-
+    
         public int id { get; set; }
 
-        [Required(ErrorMessage = "Введите имя пользователя")]
-        [StringLength(20, MinimumLength = 5, ErrorMessage ="Имя должно быть мимнимум 5 и макс 20")]
+        [Required]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "Имя должно быть мимнимум 5 и макс 20")]
         public string username { get; set; }
 
-        [Required(ErrorMessage = "Введите пароль")]
+        [Required]
         [MinLength(5, ErrorMessage = "Пароль должнен содержать минимум 5 символов")]
         public string password { get; set; }
 
-        [Required(ErrorMessage = "Введите почту")]
-        [StringLength(40, MinimumLength = 5)]
+        [Required]
+        [StringLength(20, MinimumLength = 5)]
         [EmailAddress(ErrorMessage = "Некорректный адрес электронной почты")]
         public string email { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Выберите роль")]
+        [Range(1, int.MaxValue, ErrorMessage = "ID роли должен быть больше 0")]
         public int role_id { get; set; }
         public Nullable<bool> is_active { get; set; }
     
